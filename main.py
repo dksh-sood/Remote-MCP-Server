@@ -128,5 +128,10 @@ def categories():
 
 # Start the server
 if __name__ == "__main__":
-    mcp.run(transport="http", host="0.0.0.0", port=8000)
-    # mcp.run()
+    host = os.getenv("MCP_HOST", "127.0.0.1")
+    port = int(os.getenv("MCP_PORT", "8000"))
+    browser_host = "127.0.0.1" if host in {"0.0.0.0", "::"} else host
+
+    print(f"MCP server listening on {host}:{port}")
+    print(f"Open locally at http://{browser_host}:{port}/")
+    mcp.run(transport="streamable-http", host=host, port=port)
